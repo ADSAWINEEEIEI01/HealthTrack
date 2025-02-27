@@ -1,5 +1,6 @@
 const express = require('express');
-const mysql = require('mysql2');
+require("dotenv").config();
+const mysql = require("mysql2");
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
@@ -42,40 +43,29 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// เชื่อมต่อ MySQL
+// สร้างการเชื่อมต่อ MySQL
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', 
-  database: 'healthtrack'
+  host: process.env.DB_HOST || 'localhost', 
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '', 
+  database: process.env.DB_NAME || 'healthtrack',
+  port: process.env.DB_PORT || 3306 // ใช้ค่า port จาก .env ถ้ามี
 });
 
-db.connect(err => {
+// ตรวจสอบการเชื่อมต่อ
+db.connect((err) => {
   if (err) {
-    console.error('เชื่อมต่อ MySQL ไม่ได้:', err);
-  } else {
-    console.log('Connected to MySQL');
+    console.error("❌ ไม่สามารถเชื่อมต่อกับฐานข้อมูล:", err);
+    return;
   }
+  console.log("✅ เชื่อมต่อ MySQL สำเร็จ!");
 });
 
-// สร้างการเชื่อมต่อ
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '', 
-//   database: 'healthtrack'
-// });
+module.exports = db; // ส่งออกเพื่อใช้ที่อื่น
 
-// // ทดสอบการเชื่อมต่อ
-// connection.connect((err) => {
-//   if (err) {
-//     console.error('ไม่สามารถเชื่อมต่อกับฐานข้อมูล:', err);
-//     return;
-//   }
-//   console.log('เชื่อมต่อกับฐานข้อมูลสำเร็จ');
-// });
-
-
+app.get("/", (req, res) => {
+  res.send("HealthTrack Backend is Running!");
+});
 
 // **API สมัครสมาชิก**
 app.post('/api/register', (req, res) => {
