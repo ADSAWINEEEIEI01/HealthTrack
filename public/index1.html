@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบันทึกสุขภาพเด็กเล็ก</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="scripts.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- แสดงชื่อผู้ใช้ที่ล็อกอิน -->
+        <div class="user-info"> 
+            <p style="color: white;">ยินดีต้อนรับ, <span id="username-display">Guest</span></p>
+            <button onclick="logoutUser()">ออกจากระบบ</button>
+        </div>
+
+        <div class="feature-group">
+            <div class="feature" onclick="window.location.href='record.html'">
+                <h3>บันทึกข้อมูล</h3>
+                <p>บันทึกข้อมูล เช่น น้ำหนัก ส่วนสูง และอาการป่วยของลูกน้อย</p>
+            </div>
+            <div class="feature" onclick="window.location.href='display.html'">
+                <h3>แสดงข้อมูล</h3>
+                <p>แสดงข้อมูล เช่น น้ำหนัก ส่วนสูง และอาการป่วยของลูกน้อย</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // จัดการการแสดงชื่อผู้ใช้หลังจากโหลดหน้า
+        document.addEventListener("DOMContentLoaded", function () {
+            const usernameDisplay = document.getElementById("username-display");
+
+            if (usernameDisplay) {
+                const loggedInUser = localStorage.getItem("loggedInUser");
+                console.log("🔍 กำลังโหลดชื่อผู้ใช้:", loggedInUser);  // Debugging
+
+                // แสดงชื่อผู้ใช้หรือลูกค้าที่ไม่ได้ล็อกอิน
+                usernameDisplay.textContent = loggedInUser ? `${loggedInUser}` : "Guest";
+            }
+        });
+
+        // ฟังก์ชันออกจากระบบ
+        function logoutUser() {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("loggedInUserId");  // ลบข้อมูลการเข้าสู่ระบบ
+            window.location.href = "login.html"; // เปลี่ยนเส้นทางไปหน้า Login
+        }
+    </script>
+</body>
+</html>

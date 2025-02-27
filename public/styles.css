@@ -1,0 +1,171 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-info {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    background: #007bff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+h3 {
+    color: #007bff;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+p {
+    font-size: 14px;
+    color: #555;
+}
+.feature-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+.feature {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+.feature:hover {
+    background: #e6f2ff;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.btn {
+    width: 40%;  /* ลดขนาดปุ่ม */
+    padding: 10px; /* ปรับขนาด padding ให้เล็กลง */
+    font-size: 14px; /* ลดขนาดตัวอักษร */
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    transition: 0.3s;
+    font-weight: 600;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.register-btn {
+    background: #007bff;
+    color: white;
+}
+
+.register-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.login-btn {
+    background: #28a745;
+    color: white;
+}
+
+.login-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+/* footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+} */
+
+
+.custom-swal-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100px !important;  /* ขยายขนาดปุ่ม */
+    height: 50px !important;
+    padding: 12px 24px !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    background-color: #dc3545 !important; /* สีแดง */
+    color: white !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.custom-swal-button:hover {
+    background-color: #c82333 !important;
+    transform: scale(1.05) !important;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;  /* ลดขนาด padding ให้ปุ่มเล็กลง */
+    font-size: 16px;    /* ลดขนาด font ให้เล็กลง */
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก - ระบบบันทึกสุขภาพเด็กเล็ก</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h3 {
+            color: #007bff;
+            font-size: 26px;
+            font-weight: 600;
+        }
+        .input-group {
+            position: relative;
+            margin-top: 15px;
+        }
+        .input-group input {
+            width: 80%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s ease-in-out;
+        }
+        .input-group input:focus {
+            border-color: #007bff;
+        }
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            width: 48%;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+        .register-btn {
+            background: #007bff;
+            color: white;
+        }
+        .register-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .login-btn {
+            background: #28a745;
+            color: white;
+        }
+        .login-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        footer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h3>สมัครสมาชิก</h3>
+        <form id="register-form">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required>
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="register-btn">สมัครสมาชิก</button>
+                <button type="button" class="login-btn" onclick="window.location.href='index.html'">หน้าหลัก</button>
+            </div>
+        </form>
+    </main>
+    <script src="scripts.js" defer></script>
+</body>
+</html>

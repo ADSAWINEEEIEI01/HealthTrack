@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกข้อมูลเด็ก - HealthTrack</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/fontawesome/js/all.min.js"></script>
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <style>
+        
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h3 {
+            color: #007bff;
+            font-size: 26px;
+            font-weight: 600;
+        }
+        .input-group {
+            position: relative;
+            margin-top: 15px;
+        }
+        .input-group input {
+            width: 80%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s ease-in-out;
+        }
+        .input-group input:focus {
+            border-color: #007bff;
+        }
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            width: 48%;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+        .save-btn {
+            background: #007bff;
+            color: white;
+        }
+        .save-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: #28a745;
+            color: white;
+        }
+        .back-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        footer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>บันทึกข้อมูลเด็ก</h3>
+        <form id="record-form">
+            <div class="input-group">
+                <input type="text" id="child-name" placeholder="ชื่อเด็ก" required>
+                <i class="fas fa-child"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="child-age" placeholder="อายุ (ปี)" required>
+                <i class="fas fa-calendar"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="child-weight" placeholder="น้ำหนัก (กก.)" required>
+                <i class="fas fa-weight"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="child-height" placeholder="ส่วนสูง (ซม.)" required>
+                <i class="fas fa-ruler-vertical"></i>
+            </div>
+            <div class="input-group">
+                <input type="text" id="child-illness" placeholder="อาการป่วย (ถ้ามี)">
+                <i class="fas fa-notes-medical"></i>
+            </div>            
+            <div class="button-group">
+                <button type="submit" class="save-btn">บันทึกข้อมูล</button>
+                <button type="button" class="back-btn" onclick="window.location.href='index1.html'">หน้าหลัก</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("record-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "บันทึกข้อมูลสำเร็จ!",
+                text: "ข้อมูลเด็กถูกบันทึกเรียบร้อยแล้ว",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        });
+    </script>
+    <script src="scripts.js" defer></script>
+</body>
+</html>

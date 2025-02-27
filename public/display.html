@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แสดงข้อมูลเด็ก - HealthTrack</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/fontawesome/js/all.min.js"></script>
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .data-container {
+            width: 95%;
+            max-width: 1200px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h3 {
+            color: #007bff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f1f1; }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        .edit-btn {
+            background: #ffc107;
+            color: white;
+        }
+        .edit-btn:hover { background: #e0a800; }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .delete-btn:hover { background: #c82333; }
+        .back-btn {
+            background: #28a745;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+        }
+        .back-btn:hover { background: #218838; }
+
+        .add-child-btn {
+            background: #28a745; /* สีเขียว */
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .add-child-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        
+        /* แสดงพื้นหลังเบลอเมื่อฟอร์มแก้ไขข้อมูลเด็กถูกเปิด */
+        body.blur-background {
+            overflow: hidden; /* ป้องกันการเลื่อนหน้าจอขณะแสดงฟอร์ม */
+        }
+
+        body.blur-background::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);  /* เบลอเบาๆ */
+            backdrop-filter: blur(2px); /* เพิ่มการเบลอเบื้องหลัง */
+            z-index: 1000; /* ทำให้เบลออยู่เหนือเนื้อหา */
+        }
+        
+        /* ฟอร์มแก้ไขข้อมูลเด็ก */
+        #edit-form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            width: 80%;
+            max-width: 500px;
+            box-sizing: border-box;
+            backdrop-filter: none; /* ปิดการเบลอพื้นหลัง */
+        }
+
+        /* ปรับกล่องข้อความให้มีขนาดเหมาะสม */
+        #edit-form-container input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;  /* ทำให้กล่องข้อความมีความกว้าง 80% */
+            font-size: 16px;  /* ขนาดตัวอักษร */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;  /* ทำให้ไม่เกินขอบเขต */
+        }
+        
+        #edit-form-container button {
+            width: 47%;  /* ให้ปุ่มมีขนาดกว้างประมาณครึ่งหนึ่ง */
+            padding: 12px 20px; /* เพิ่มขนาด padding */
+            font-size: 16px; /* ขนาดตัวอักษร */
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+            display: inline-block; /* ทำให้ปุ่มแสดงเป็นบรรทัดเดียว */
+            margin-right: 3%; /* เพิ่มระยะห่างระหว่างปุ่ม */
+            margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างปุ่มและส่วนอื่น */
+        }
+
+        #edit-form-container button:last-child {
+            margin-right: 0; /* ปุ่มสุดท้ายจะไม่มี margin ขวา */
+        }
+
+        .cancel-btn {
+            background-color: #dc3545 !important; /* สีแดง */
+            color: white !important;
+        }
+
+        .cancel-btn:hover {
+            background-color: #c82333 !important;
+        }
+
+        #edit-form-container button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #edit-form-container button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        /* ฟอร์มแก้ไขอาการป่วย */
+        #edit-health-form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            width: 80%;
+            max-width: 500px;
+            box-sizing: border-box;
+            backdrop-filter: none; /* ปิดการเบลอพื้นหลัง */
+        }
+
+        /* ปรับกล่องข้อความให้มีขนาดเหมาะสม */
+        #edit-health-form-container input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;  /* ทำให้กล่องข้อความมีความกว้าง 100% */
+            font-size: 16px;  /* ขนาดตัวอักษร */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;  /* ทำให้ไม่เกินขอบเขต */
+        }
+
+        /* ปรับปุ่มให้มีขนาดเหมาะสม */
+        #edit-health-form-container button {
+            width: 47%;  /* ให้ปุ่มมีขนาดกว้างประมาณครึ่งหนึ่ง */
+            padding: 12px 20px; /* เพิ่มขนาด padding */
+            font-size: 16px; /* ขนาดตัวอักษร */
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            transition: 0.3s;
+            font-weight: 600;
+            display: inline-block; /* ทำให้ปุ่มแสดงเป็นบรรทัดเดียว */
+            margin-right: 3%; /* เพิ่มระยะห่างระหว่างปุ่ม */
+            margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างปุ่มและส่วนอื่น */
+        }
+
+        #edit-health-form-container button:last-child {
+            margin-right: 0; /* ปุ่มสุดท้ายจะไม่มี margin ขวา */
+        }
+
+        .cancel-btn {
+            background-color: #dc3545 !important; /* สีแดง */
+            color: white !important;
+        }
+
+        .cancel-btn:hover {
+            background-color: #c82333 !important;
+        }
+
+        #edit-health-form-container button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #edit-health-form-container button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+/* เพิ่มการกระพริบ */
+@keyframes blink {
+    0% { opacity: 1; background-color: #ffff99; transform: scale(1); }
+    50% { opacity: 0.5; background-color: #ffff00; transform: scale(1.02); }
+    100% { opacity: 1; background-color: #ffff99; transform: scale(1); }
+}
+
+/* คลาสที่ใช้สำหรับแถวที่กระพริบ */
+.blink {
+    animation: blink 1.5s ease-in-out infinite; /* กระพริบทุก 1.5 วินาที */
+    background-color: #ffff99;  /* สีพื้นหลังที่ใช้ระหว่างการกระพริบ */
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="data-container">
+        <h3>ข้อมูลเด็ก</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ชื่อเด็ก</th>
+                    <th>อายุ</th>
+                    <th>น้ำหนัก</th>
+                    <th>ส่วนสูง</th>
+                    <th>อาการป่วย</th>
+                    <th>การจัดการ</th>
+                </tr>
+            </thead>
+            <tbody id="children-table">
+                <!-- ข้อมูลจะแสดงที่นี่ -->
+            </tbody>
+        </table>
+        <button class="back-btn" onclick="window.location.href='index1.html'">หน้าหลัก</button>
+    </div>
+
+    <!-- ฟอร์มแก้ไขข้อมูลเด็ก -->
+    <div id="edit-form-container">
+        <h3>แก้ไขข้อมูลเด็ก</h3>
+        <form id="edit-form">
+            <input type="hidden" id="child-id">
+            <label for="child-name">ชื่อเด็ก:</label>
+            <input type="text" id="child-name" required>
+            <label for="child-age">อายุ:</label>
+            <input type="number" id="child-age" required>
+            <label for="child-weight">น้ำหนัก:</label>
+            <input type="number" id="child-weight" required>
+            <label for="child-height">ส่วนสูง:</label>
+            <input type="number" id="child-height" required>
+            <button type="submit">บันทึกการแก้ไข</button>
+            <button type="button" id="cancel-btn" class="cancel-btn">ยกเลิก</button>
+        </form>
+    </div>
+
+    <!-- ฟอร์มแก้ไขอาการป่วย -->
+    <div id="edit-health-form-container" style="display:none;">
+        <h3>แก้ไขอาการป่วยของเด็ก</h3>
+        <form id="edit-health-form">
+            <input type="hidden" id="health-child-id">
+            <label for="child-illness">อาการป่วย:</label>
+            <input type="text" id="child-illness" required>
+            <button type="submit">บันทึกการแก้ไข</button>
+            <button type="button" id="cancel-health-btn" class="cancel-btn">ยกเลิก</button>
+        </form>
+    </div>
+
+    <script src="scripts.js" defer></script>
+
+</body>
+</html>

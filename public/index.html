@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบันทึกสุขภาพเด็กเล็ก</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h3>ระบบบันทึกสุขภาพเด็กเล็ก</h3>
+        <p>ระบบบันทึกสุขภาพเด็กเล็กที่ช่วยให้คุณดูแลสุขภาพลูกน้อยได้ง่ายขึ้น</p>
+
+        <div class="feature-group">
+            <div class="feature" onclick="showLoginAlert()">
+                <h3>บันทึกข้อมูล</h3>
+                <p>บันทึกข้อมูล เช่น น้ำหนัก ส่วนสูง และอาการป่วยของลูกน้อย</p>
+            </div>
+            <div class="feature" onclick="showLoginAlert()">
+                <h3>แสดงข้อมูล</h3>
+                <p>แสดงข้อมูล เช่น น้ำหนัก ส่วนสูง และอาการป่วยของลูกน้อย</p>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <a href="register.html" class="btn register-btn">สมัครสมาชิก</a>
+            <a href="login.html" class="btn login-btn">เข้าสู่ระบบ</a>
+        </div>
+    </div>
+
+    <!-- <footer>
+        <p>&copy; 2025 HealthTrack. All rights reserved.</p>
+    </footer> -->
+
+    <script>
+        function showLoginAlert() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'กรุณาเข้าสู่ระบบ',
+                text: 'โปรดเข้าสู่ระบบก่อนใช้งานฟังก์ชันนี้',
+                confirmButtonText: 'ตกลง'
+            });
+        }
+    </script>
+</body>
+</html>
